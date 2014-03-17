@@ -6,7 +6,7 @@
 /*   By: ycribier <ycribier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/23 21:22:31 by ycribier          #+#    #+#             */
-/*   Updated: 2014/03/17 13:15:20 by ycribier         ###   ########.fr       */
+/*   Updated: 2014/03/17 13:21:26 by ycribier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ void			get_entry(t_graph *G)
 	while (get_next_line(0, &line) == 1)
 	{
 		get(line, G);
-		line_index++;
 		if (g_err)
 		{
 			free(line);
