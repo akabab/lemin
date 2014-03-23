@@ -6,7 +6,7 @@
 #    By: ycribier <ycribier@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/01/03 16:39:11 by ycribier          #+#    #+#              #
-#    Updated: 2014/03/17 13:20:42 by ycribier         ###   ########.fr        #
+#    Updated: 2014/03/23 18:01:45 by ycribier         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,21 +16,21 @@ NAME			=	lem-in
 LIB				=	libft/libft.a
 LIB_PATH		=	libft/
 INCLUDES		=	./includes
-SRCS			=	lemin.c				\
-					arg.c				\
-					entry.c				\
-					manage_entry.c		\
-					resolve.c			\
-					bfs.c				\
-					path_opti.c			\
-					travel.c			\
-					free.c				\
-					lem_htable.c		\
-					lem_hft.c			\
-					lem_htable_rm.c		\
-					dbg.c				\
-					err.c
-OBJS			=	$(SRCS:.c=.o)
+SRCS			=	src/lemin.c				\
+					src/arg.c				\
+					src/entry.c				\
+					src/manage_entry.c		\
+					src/resolve.c			\
+					src/bfs.c				\
+					src/path_opti.c			\
+					src/travel.c			\
+					src/free.c				\
+					src/lem_htable.c		\
+					src/lem_hft.c			\
+					src/lem_htable_rm.c		\
+					src/dbg.c				\
+					src/err.c
+OBJS			=	$(SRCS:src/%.c=obj/%.o)
 
 # COLORS
 C_NO			=	"\033[00m"
@@ -43,21 +43,25 @@ C_WARN			=	"\033[33m"
 SUCCESS			=	$(C_GOOD)SUCCESS$(C_NO)
 OK				=	$(C_OK)OK$(C_NO)
 
-all: $(NAME)
+all: obj $(NAME)
 
 $(NAME): $(LIB) $(OBJS)
 	@$(CC) -o $@ $^ -L $(LIB_PATH) -lft
 	@echo "Compiling" [ $(NAME) ] $(SUCCESS)
 
 $(LIB):
-	make -C $(LIB_PATH)
+	@make -C $(LIB_PATH)
 
-%.o: %.c $(INCLUDES)/lemin.h
+obj:
+	@mkdir -p obj
+
+obj/%.o: src/%.c $(INCLUDES)/lemin.h
 	@$(CC) -c -o $@ $< -I $(LIB_PATH)$(INCLUDES) -I $(INCLUDES)
 	@echo "Linking" [ $< ] $(OK)
 
 clean:
 	@rm -f $(OBJS)
+	@rm -rf obj
 	@echo "Cleaning" [ $(NAME) ] "..." $(OK)
 
 fclean: clean
