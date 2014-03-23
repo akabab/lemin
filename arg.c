@@ -28,37 +28,37 @@ void				display_help(void)
 	ft_putendl(C(YELLOW)"SUGGESTED"C(NO)"\n  ./lem-in -a -c < map");
 }
 
-void				display_dbg(t_graph *G)
+void				display_dbg(t_graph *gr)
 {
-	if (G->debug.infos)
-		display_infos(G);
-	if (G->debug.rooms)
-		display_rooms(G->room_ht);
-	if (G->debug.paths)
-		display_paths(G);
+	if (gr->debug.infos)
+		display_infos(gr);
+	if (gr->debug.rooms)
+		display_rooms(gr->room_ht);
+	if (gr->debug.paths)
+		display_paths(gr);
 }
 
-static void			set_dbg(t_graph *G, char *arg)
+static void			set_dbg(t_graph *gr, char *arg)
 {
 	if (ft_strequ(arg, "--help") || ft_strequ(arg, "-h"))
-		G->debug.help = TRUE;
+		gr->debug.help = TRUE;
 	else if (ft_strequ(arg, "--dbg-infos") || ft_strequ(arg, "-i"))
-		G->debug.infos = TRUE;
+		gr->debug.infos = TRUE;
 	else if (ft_strequ(arg, "--dbg-rooms") || ft_strequ(arg, "-r"))
-		G->debug.rooms = TRUE;
+		gr->debug.rooms = TRUE;
 	else if (ft_strequ(arg, "--dbg-paths") || ft_strequ(arg, "-p"))
-		G->debug.paths = TRUE;
+		gr->debug.paths = TRUE;
 	else if (ft_strequ(arg, "--dbg-ants") || ft_strequ(arg, "-a"))
-		G->debug.ants = TRUE;
+		gr->debug.ants = TRUE;
 	else if (ft_strequ(arg, "--dbg-cycles") || ft_strequ(arg, "-c"))
-		G->debug.cycles = TRUE;
+		gr->debug.cycles = TRUE;
 	else if (ft_strequ(arg, "--dbg-nofile") || ft_strequ(arg, "-n"))
-		G->debug.nofile = TRUE;
+		gr->debug.nofile = TRUE;
 	else if (ft_strequ(arg, "--dbg-errors") || ft_strequ(arg, "-e"))
-		G->debug.errors = TRUE;
+		gr->debug.errors = TRUE;
 }
 
-void				get_args(t_graph *G, int ac, char **av)
+void				get_args(t_graph *gr, int ac, char **av)
 {
 	int			i;
 
@@ -67,7 +67,7 @@ void				get_args(t_graph *G, int ac, char **av)
 		i = 1;
 		while (i < ac)
 		{
-			set_dbg(G, av[i]);
+			set_dbg(gr, av[i]);
 			i++;
 		}
 	}

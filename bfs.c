@@ -34,14 +34,14 @@ static void	add_room(t_room *room, t_list_node **queue, t_list_node **queue_end)
 	}
 }
 
-void		bfs(t_graph *G)
+void		bfs(t_graph *gr)
 {
 	t_list_node			*queue;
 	t_list_node			*queue_end;
 	t_room				*cur_room;
 
 	queue = NULL;
-	cur_room = G->start;
+	cur_room = gr->start;
 	cur_room->checked = TRUE;
 	queue_end = list_push_back(&queue, cur_room);
 	while (queue)

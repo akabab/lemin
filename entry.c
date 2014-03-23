@@ -12,7 +12,7 @@
 
 #include "lemin.h"
 
-void			get_edge(char *line, t_graph *G)
+void			get_edge(char *line, t_graph *gr)
 {
 	char		**tab;
 	int			len;
@@ -28,8 +28,8 @@ void			get_edge(char *line, t_graph *G)
 		set_error(ERR_EDGWF);
 		return ;
 	}
-	if (!(room1 = htable_get(G->room_ht, tab[0]))
-		|| !(room2 = htable_get(G->room_ht, tab[1])))
+	if (!(room1 = htable_get(gr->room_ht, tab[0]))
+		|| !(room2 = htable_get(gr->room_ht, tab[1])))
 	{
 		set_error(ERR_EDGRE);
 		return ;
@@ -41,7 +41,7 @@ void			get_edge(char *line, t_graph *G)
 	free_tab(&tab);
 }
 
-static t_room	*get_room_st(char *line, t_graph *G)
+static t_room	*get_room_st(char *line, t_graph *gr)
 {
 	char		**tab;
 	int			len;
@@ -54,7 +54,7 @@ static t_room	*get_room_st(char *line, t_graph *G)
 	if (len != 3 || tab[0][0] == 'L'
 		|| !ft_str_isdigit(tab[1]) || !ft_str_isdigit(tab[2]))
 		return (set_error(C_ERR_ROOMWF));
-	if (htable_get(G->room_ht, tab[0]))
+	if (htable_get(gr->room_ht, tab[0]))
 		return (set_error(C_ERR_ROOMRE));
 	if ((room = malloc(sizeof(t_room))) == NULL)
 		return (set_error(C_ERR_NOMEM));
@@ -70,27 +70,27 @@ static t_room	*get_room_st(char *line, t_graph *G)
 	return (room);
 }
 
-void			get_room(char *line, t_graph *G, char *io)
+void			get_room(char *line, t_graph *gr, char *io)
 {
 	t_room		*room;
 
-	room = get_room_st(line, G);
+	room = get_room_st(line, gr);
 	if (!room)
 		return ;
-	htable_add(G->room_ht, room, room->name);
+	htable_add(gr->room_ht, room, room->name);
 	if (*io == 'i')
-		G->start = room;
+		gr->start = room;
 	else if (*io == 'o')
-		G->end = room;
+		gr->end = room;
 	*io = 0;
-	G->n_room++;
+	gr->n_room++;
 }
 
-void			get_comment_or_command(char *line, t_graph *G, char *io)
+void			get_comment_or_command(char *line, t_graph *gr, char *io)
 {
 	if (ft_strequ(&line[1], "#start"))
 	{
-		if (G->start)
+		if (gr->start)
 		{
 			set_error(ERR_CCSE);
 			return ;
@@ -99,7 +99,7 @@ void			get_comment_or_command(char *line, t_graph *G, char *io)
 	}
 	else if (ft_strequ(&line[1], "#end"))
 	{
-		if (G->end)
+		if (gr->end)
 		{
 			set_error(ERR_CCEE);
 			return ;
@@ -108,9 +108,9 @@ void			get_comment_or_command(char *line, t_graph *G, char *io)
 	}
 }
 
-void			get_ant(char *line, t_graph *G)
+void			get_ant(char *line, t_graph *gr)
 {
-	if (G->n_ant)
+	if (gr->n_ant)
 	{
 		set_error(C_ERR_ANTAE);
 		return ;
@@ -121,5 +121,5 @@ void			get_ant(char *line, t_graph *G)
 		set_error(C_ERR_ANTIV);
 		return ;
 	}
-	G->n_ant = ft_atoi(line);
+	gr->n_ant = ft_atoi(line);
 }

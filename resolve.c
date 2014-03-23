@@ -6,7 +6,7 @@
 /*   By: ycribier <ycribier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/19 11:15:54 by ycribier          #+#    #+#             */
-/*   Updated: 2014/03/15 18:30:01 by ycribier         ###   ########.fr       */
+/*   Updated: 2014/03/23 17:34:07 by ycribier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ static void			uncheck_and_unparent_rooms(t_htable *room_ht)
 	}
 }
 
-static void			check_path_rooms(t_graph *G)
+static void			check_path_rooms(t_graph *gr)
 {
 	t_list_node		*path_list;
 	t_path			*path;
 	t_list_node		*room_list;
 	t_room			*room;
 
-	if (!(path_list = G->path_list))
+	if (!(path_list = gr->path_list))
 		return ;
 	while (path_list)
 	{
@@ -59,7 +59,7 @@ static void			check_path_rooms(t_graph *G)
 	}
 }
 
-static t_path		*create_path(t_graph *G)
+static t_path		*create_path(t_graph *gr)
 {
 	t_path			*path;
 	static uint		path_id = 1;
@@ -70,56 +70,62 @@ static t_path		*create_path(t_graph *G)
 	path->len = -1;
 	path->ants = 0;
 	path->room_list = NULL;
-	path->end = G->end;
+	path->end = gr->end;
 	return (path);
 }
 
-static int			recover_path(t_graph *G)
+static int			recover_path(t_graph *gr)
 {
 	t_room					*room;
 	t_path					*path;
 	static t_list_node		*path_list_end = NULL;
 
-	if (!(path = create_path(G)))
+	if (!(path = create_path(gr)))
 		return (0);
-	room = G->end;
+	room = gr->end;
 	while (room)
 	{
 		path->len++;
 		list_push_front(&(path->room_list), room);
 		room = room->parent;
 	}
-	if (path->id > 1 && path->len >= precalc_cycles(G))
+	if (path->id > 1 && path->len >= precalc_cycles(gr))
 	{
 		list_destroy(&(path->room_list));
 		free(path);
 		return (0);
 	}
-	if (!G->path_list)
-		path_list_end = list_push_back(&(G->path_list), path);
+	if (!gr->path_list)
+		path_list_end = list_push_back(&(gr->path_list), path);
 	else
 		path_list_end = list_push_back(&path_list_end, path);
-	G->total_paths_len += path->len;
-	return (1);
+	gr->total_paths_len += path->len;
+	return (path->len);
 }
 
-int					find_paths(t_graph *G)
+int					find_paths(t_graph *gr)
 {
 	uint	max_path;
 	uint	path_index;
+	uint	path_len;
 
-	max_path = ft_min(G->start->n_adj, G->end->n_adj);
+	max_path = ft_min(gr->start->n_adj, gr->end->n_adj);
 	path_index = 0;
 	while (path_index < max_path)
 	{
-		bfs(G);
-		if (!G->end->parent)
+		bfs(gr);
+		if (!gr->end->parent)
 			break ;
-		if (!recover_path(G))
+		if (!(path_len = recover_path(gr)))
 			break ;
-		G->n_path += 1;
-		uncheck_and_unparent_rooms(G->room_ht);
-		check_path_rooms(G);
+		if (path_len == 1)
+		{
+			list_remove_by_value(&gr->end->adj_list, gr->start);
+			list_remove_by_value(&gr->start->adj_list, gr->end);
+		}
+		gr->n_path += 1;
+		uncheck_and_unparent_rooms(gr->room_ht);
+		check_path_rooms(gr);
 		path_index++;
 	}
 	return (path_index);

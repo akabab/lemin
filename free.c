@@ -89,16 +89,16 @@ static void		free_entry(t_list_node *entry_list)
 	}
 }
 
-void			free_memory(t_graph *G)
+void			free_memory(t_graph *gr)
 {
-	if (!G)
+	if (!gr)
 		return ;
-	if (G->entry_list)
-		free_entry(G->entry_list);
-	if (G->room_ht)
-		free_htable(G->room_ht);
-	if (G->path_list)
-		free_path_list(G->path_list);
-	free(G);
+	if (gr->entry_list)
+		free_entry(gr->entry_list);
+	if (gr->room_ht)
+		free_htable(gr->room_ht);
+	if (gr->path_list)
+		free_path_list(gr->path_list);
+	free(gr);
 }
 

@@ -46,9 +46,9 @@ void	print_detailed_error(int err_id)
 	ft_printf(C(RED)"ERROR(%d): "C(NO)"%s\n", err_id, err_msg[err_id]);
 }
 
-void	print_error(t_graph *G, int err_id)
+void	print_error(t_graph *gr, int err_id)
 {
-	if (DEBUG && G->debug.errors)
+	if (DEBUG && gr->debug.errors)
 		print_detailed_error(g_err);
 	else if (err_id > C_ERR)
 		ft_putendl("ERROR");

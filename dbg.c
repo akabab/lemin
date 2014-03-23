@@ -12,15 +12,15 @@
 
 #include "lemin.h"
 
-void			display_infos(t_graph *G)
+void			display_infos(t_graph *gr)
 {
 	ft_putendl(C(YELLOW)"\n::INFOS::"C(NO));
-	ft_printf("Ants: "C(GREEN)"%d\n"C(NO), G->n_ant);
-	ft_printf("Rooms: "C(GREEN)"%d\n"C(NO), G->n_room);
-	ft_printf("Start room: "C(GREEN)"%s\n"C(NO), G->start->name);
-	ft_printf("End room: "C(GREEN)"%s\n"C(NO), G->end->name);
-	ft_printf("Paths: "C(GREEN)"%d\n"C(NO), G->n_path);
-	ft_printf("Total paths len: "C(GREEN)"%d\n"C(NO), G->total_paths_len);
+	ft_printf("Ants: "C(GREEN)"%d\n"C(NO), gr->n_ant);
+	ft_printf("Rooms: "C(GREEN)"%d\n"C(NO), gr->n_room);
+	ft_printf("Start room: "C(GREEN)"%s\n"C(NO), gr->start->name);
+	ft_printf("End room: "C(GREEN)"%s\n"C(NO), gr->end->name);
+	ft_printf("Paths: "C(GREEN)"%d\n"C(NO), gr->n_path);
+	ft_printf("Total paths len: "C(GREEN)"%d\n"C(NO), gr->total_paths_len);
 }
 
 static void		display_adjs(t_room *room)
@@ -83,13 +83,13 @@ void			print_path(t_path *path)
 	ft_putendl(C(PINK)"END"C(NO));
 }
 
-void			display_paths(t_graph *G)
+void			display_paths(t_graph *gr)
 {
 	t_list_node		*path_list;
 	t_path			*path;
 
 	ft_putendl(C(YELLOW)"\n::PATHS::"C(NO));
-	if (!(path_list = G->path_list))
+	if (!(path_list = gr->path_list))
 	{
 		ft_putendl(C(RED)"No path found."C(NO));
 		return ;

@@ -6,7 +6,7 @@
 /*   By: ycribier <ycribier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/01/03 21:56:21 by ycribier          #+#    #+#             */
-/*   Updated: 2014/03/17 13:18:32 by ycribier         ###   ########.fr       */
+/*   Updated: 2014/03/23 13:52:12 by ycribier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,6 @@
 # include "libft.h"
 # include "list.h"
 # include "lem_htable.h"
-
-/*
-**		TO FIX
-**		-graph 'G' -> norme
-**		-edge already exist
-**		-free in case of ERR_ROOMAE
-**		-free in case of ERR_ROOMAE
-**		-retry strlen with cdenis_version // fail
-**
-**		TO PIMP
-**		-more colors
-**
-**		FIXED
-**		-lattency if free after write in display_entry() (T/?)
-**		-optim compiler -O2 (T/?)
-**		-stop le recover de path si n_ant < path_len (T/?)
-**		-bfs push_back converted (T/?)
-**		-recover_path push_back converted (T/?)
-**		-stop bfs if recover returned 0 (T/?)
-**		-free on return/exit
-**		-traiter les entry dans l'ordre (si une room est parmi les edge -> !OK)
-**		-changer le debug en param du prog
-*/
 
 typedef unsigned int	uint;
 
@@ -94,38 +71,38 @@ typedef struct			s_graph
 /*
 **		Options
 */
-void	get_args(t_graph *G, int ac, char **av);
+void	get_args(t_graph *gr, int ac, char **av);
 void	display_help(void);
 
 /*
 **		Manage entry
 */
 void	display_entry(t_list_node *entry_list);
-void	verif_entry(t_graph *G);
-void	get_entry(t_graph *G);
+void	verif_entry(t_graph *gr);
+void	get_entry(t_graph *gr);
 
-void	get_edge(char *line, t_graph *G);
-void	get_room(char *line, t_graph *G, char *io);
-void	get_comment_or_command(char *line, t_graph *G, char *io);
-void	get_ant(char *line, t_graph *G);
+void	get_edge(char *line, t_graph *gr);
+void	get_room(char *line, t_graph *gr, char *io);
+void	get_comment_or_command(char *line, t_graph *gr, char *io);
+void	get_ant(char *line, t_graph *gr);
 
 /*
 **		Resolve - Pathfinding
 */
-void	bfs(t_graph *G);
-int		find_paths(t_graph *G);
+void	bfs(t_graph *gr);
+int		find_paths(t_graph *gr);
 
 /*
 **		Travel - send ants
 */
-void	preset_path_ants(t_graph *G, uint n_cycle);
-uint	precalc_cycles(t_graph *G);
-void	travel(t_graph *G);
+void	preset_path_ants(t_graph *gr, uint n_cycle);
+uint	precalc_cycles(t_graph *gr);
+void	travel(t_graph *gr);
 
 /*
 **		FREE
 */
-void	free_memory(t_graph *G);
+void	free_memory(t_graph *gr);
 
 /*
 **		ERROR
@@ -156,7 +133,7 @@ t_err	g_err;
 
 void	*set_error(int err_id);
 void	print_detailed_error(int err_id);
-void	print_error(t_graph *G, int err_id);
+void	print_error(t_graph *gr, int err_id);
 
 /*
 **		DEBUG
@@ -176,10 +153,10 @@ void	print_error(t_graph *G, int err_id);
 # define CB(X)		"\x1B[48;1;" X "m"
 # define CBNO		"\x1B[0m"
 
-void	display_infos(t_graph *G);
+void	display_infos(t_graph *gr);
 void	display_rooms(struct s_htable *room_ht);
-void	display_paths(t_graph *G);
+void	display_paths(t_graph *gr);
 void	display_htable(struct s_htable *htable);
-void	display_dbg(t_graph *G);
+void	display_dbg(t_graph *gr);
 
 #endif /* !LEMIN_H */
