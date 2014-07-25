@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC				=	cc -g -O2 $(FLAGS)
+CC				=	cc -g -O2 #$(FLAGS)
 FLAGS			=	-Wall -Wextra -Werror
 NAME			=	lem-in
 LIB				=	libft/libft.a
