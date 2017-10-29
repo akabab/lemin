@@ -66,6 +66,6 @@ char	**ft_strsplit(char const *s, char c)
 		s += word_size;
 		i++;
 	}
-	ptr[i] = '\0';
+	ptr[i] = NULL;
 	return (ptr);
 }
