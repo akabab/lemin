@@ -51,6 +51,7 @@ typedef struct			s_dbg
 	t_bool				cycles;
 	t_bool				nofile;
 	t_bool				errors;
+	t_bool				output;
 }						t_dbg;
 
 typedef struct			s_graph

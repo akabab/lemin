@@ -45,7 +45,8 @@ static void		push_ants(t_graph *gr, t_list_node *room_node, uint *end_ants)
 	push_ants(gr, room_node->next, end_ants);
 	if (room->ant)
 	{
-		print_ant(gr, room->ant, next_room);
+		if (DEBUG && gr->debug.output)
+			print_ant(gr, room->ant, next_room);
 		if (next_room == gr->end)
 			*end_ants += 1;
 	}
@@ -99,7 +100,8 @@ void			travel(t_graph *gr)
 			travel_through_path(gr, path, &end_ants);
 			path_list = path_list->next;
 		}
-		ft_putchar('\n');
+		if (DEBUG && gr->debug.output)
+			ft_putchar('\n');
 		gr->n_cycle++;
 	}
 	if (DEBUG && gr->debug.cycles)

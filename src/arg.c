@@ -24,8 +24,9 @@ void				display_help(void)
 	ft_putendl("  --dbg-ants	-a	Highlights ants when end room is reached.");
 	ft_putendl("  --dbg-cycles	-c	Display total cycles.");
 	ft_putendl("  --dbg-nofile	-n	Disable file display at start.");
-	ft_putendl("  --dbg-errors	-e	Display detailed errors.\n");
-	ft_putendl(C(YELLOW)"SUGGESTED"C(NO)"\n  ./lem-in -a -c < map");
+	ft_putendl("  --dbg-errors	-e	Display detailed errors.");
+	ft_putendl("  --dbg-output	-o	Display output ants network cycles.\n");
+	ft_putendl(C(YELLOW)"SUGGESTED"C(NO)"\n  ./lem-in -o -a -c < map");
 }
 
 void				display_dbg(t_graph *gr)
@@ -56,6 +57,8 @@ static void			set_dbg(t_graph *gr, char *arg)
 		gr->debug.nofile = TRUE;
 	else if (ft_strequ(arg, "--dbg-errors") || ft_strequ(arg, "-e"))
 		gr->debug.errors = TRUE;
+	else if (ft_strequ(arg, "--dbg-output") || ft_strequ(arg, "-o"))
+		gr->debug.output = TRUE;
 }
 
 void				get_args(t_graph *gr, int ac, char **av)
