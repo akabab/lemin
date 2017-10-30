@@ -1,6 +1,9 @@
 # bin
 lem-in
 
+# big maps
+maps/big
+
 # Object files
 *.o
 *.ko
